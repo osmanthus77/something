@@ -46,7 +46,7 @@ iqtree -s sample.phy -m MFP
 
 `-m`可以指定替代模型、状态频率、速率异质性类型。用法`-m MODEL+FreqType+RateType`
 MODEL：
-![MODEL](/Users/yakamozchan/github_cxy/something/pic/iqtree_model.webp "iqtree_model")
+![MODEL](something/pic/iqtree_model.webp "iqtree_model")
 
 ### 超快bootstrap检验
 ```shell
