@@ -3,9 +3,9 @@ bash中常见命令
 ### rsync
 
 - `rsync`（remote synchronization）远程同步，同步文件/目录，可只传输文件中发生变化的部分  
-  选项：`-a`（--archive）归档模式进行同步（递归并保留符号连接、文件权限、时间戳、属组信息、属主信息、设备文件和特殊文件）  
-   `-v`（--verbose）详细输出  
-   `-P`（--partial --progress），保留部分传输的文件（中断后可继续）、显示传输进度  
+选项：`-a`（--archive）归档模式进行同步（递归并保留符号连接、文件权限、时间戳、属组信息、属主信息、设备文件和特殊文件）  
+  `-v`（--verbose）详细输出  
+  `-P`（--partial --progress），保留部分传输的文件（中断后可继续）、显示传输进度  
 ```shell
 rsync -avP ftp.ncbi.nlm.nih.gov::refseq/release/plasmid/ RefSeq/
 ```
