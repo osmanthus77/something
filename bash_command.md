@@ -150,5 +150,73 @@ MPI：message passing interface 消息传递接口，一种并行计算框架
 
 ### pup
 
+#### html简介
+- overview-table
+打开html，overview界面。在safiri中打开开发界面，`元素`窗口中，如下图
+![antismash_overview](/pic/antismash_overview.png "antismash_overview")
+解释：   
+`<table class="region-table">`中所有内容对应上面的`Region	Type	From	To	Most similar known cluster	Similarity`整个表格    
+点击左边灰色箭头可以查看每一个单元格的内容。    
+`<table class="region-table">`从外到内结构层次为：
+> `thead`：表格标题
+> 
+> `tbody`：表格主体部分，包含tr和td。与`thead`同一级别。
+> 
+> `tr`：table row表格的行，包含td。
+> 
+> `td`：table data表格数据单元格，存放具体内容
+> 
+> `a`：anchor超链接，包含链接的名称（纯文本），点击可跳转链接
+
+- 每个region中的MIBiG表
+在overview界面，任意选择一个region，同样打开开发界面元素窗口，如下图
+![antismash_mibig](/pic/antismash_mibig.png "antismash_mibig")
+解释：   
+> `<div class="page" id="r1c1"`：整个1.1region的页面、页面id
+>
+> `<div class="body-details-section r1c1-MIBiG-cluster-compare"`：其中的MIBiG栏
+>
+> `<div id="comparison-MIBiG-r1c1-ProtoToRegion_RiQ" class="comparison-container comparison-container-active">…</div>`：MIBiG栏中表格部分
+>
+> `<table class="cc-heat-table>"`：表格部分。包括tr、td、a三部分内容
+
+
+#### pup命令
+
 - `pup`命令行中HTML解析工具，提取HTML中的信息。    
+
+代码示例1：在overview中提取表格，提取`tr`中所有文本，包括`a`中的
+```shell
+pup 'table.region-table tbody tr td text{}'
+```
+结果：
+```shell
+
+
+Region 1
+
+
+
+
+
+NRPS
+
+
+67,680
+131,409
+fusaricidin B
+Polyketide+NRP:Lipopeptide
+100%
+
+```
+提取到了region、type、from、to、cluster、similarity中所有内容。     
+
+代码示例2：在每个region页面的mibig栏中提取表格
+```shell
+pup "div#r1c${i} div.comparison-container table.cc-heat-table tbody tr td text{}"
+```
+解释：    
+一层一层提取。先page，用`#`选择div的id，即region页面的id，其中`${i}`可变，从1开始。用`.`选择div的class，即MIBiG栏部分。    
+用`table`提取MIBiG提取表格部分文本内容，后续跟上面一样。    
+
 
