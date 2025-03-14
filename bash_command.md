@@ -36,6 +36,7 @@ rsync -avP ftp.ncbi.nlm.nih.gov::refseq/release/plasmid/ RefSeq/
 
 - `<(...)`进程替换，括号内命令的结果作为**临时文件**传递给前一命令
 - `$(...)`命令替换，括号内命令的结果作为**字符串**传递
+- `$((...))`算数扩展，旧版本中为`$[...]`（现代bash会进行字符串展开）
 
 - MinHash 含义
 用哈希函数将元素映射成数字，从哈希值里找最小值，并只保留最小值，即 MinHash 签名，重复多次得到多个签名，再比较计算签名的相似度。  
@@ -220,3 +221,5 @@ pup "div#r1c${i} div.comparison-container table.cc-heat-table tbody tr td text{}
 用`table`提取MIBiG提取表格部分文本内容，后续跟上面一样。    
 
 
+### seq
+- `seq`生成一系列数字序列
