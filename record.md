@@ -106,3 +106,16 @@ fasttree alignment_file > tree_file
 ```
 ps：   
 使用`-wag`、`-lg`参数指定建树模型。默认用蛋白序列，如果要用核酸，使用`-nt`参数，`-gtr`是核酸的模型。
+
+## 链霉菌
+
+分类拉丁文后缀：   
+> 门Phylum：-bacteria / -mycota
+>
+> 纲class：-ia
+>
+> 目order：-ales
+>
+> 科family：-aceae
+链霉菌（Streptomycetaceae）属放线菌门/纲。放线菌（Actinobacteria）属于革兰氏阳性菌。   
+[Kitasatosporales](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi)目包含三个科：Allostreptomycetaceae、Carbonactinosporaceae、[Streptomycetaceae](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Tree&id=2062&lvl=3&lin=f&keep=1&srchmode=1&unlock)。[参考](https://lpsn.dsmz.de/order/kitasatosporales)
