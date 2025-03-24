@@ -28,9 +28,15 @@ rsync -avP ftp.ncbi.nlm.nih.gov::refseq/release/plasmid/ RefSeq/
   `-d`设置字段分隔符，默认制表符\t。`-d" "`设置分隔符为空格  
   `--regex`匹配正则表达式 regular expression。
 
-- `tsv-join`将输入与`filter`文件中数据进行匹配
+- `tsv-join`将标准输入/文件与来自`-f`文件的行进行匹配连接
 选项：`-e`exclude 排除匹配的数据  
-  `-f`--filter-file（必须）过滤条件
+  `-f`--filter-file（必须）主文件（左），该文件中数据为基准进行匹配、连接       
+  `-k 数字`--key-fields指定用于匹配的列，1表示第一列   
+  `-d 数字`--data-fields数据字段，使用输入数据中第某个字段与`-f`文件中的字段比较匹配    
+  `-a`/`--append-fields`当数据行与过滤文件`-f`中的行匹配时，要附加到输出中的字段    
+
+- `tsv-sort`排序
+选项：`-k`key，对哪些键/字段排序
 
 ### other
 
@@ -56,7 +62,8 @@ rsync -avP ftp.ncbi.nlm.nih.gov::refseq/release/plasmid/ RefSeq/
 ### cut
 
 - `cut`文本中提取特定字段
-选项：`-f 1`field 第 1 列
+选项：`-f 1`field 第 1 列/字段    
+  `-d '.'`指定分隔符为点号`.`    
 
 ### gsplit
 
@@ -90,7 +97,7 @@ rsync -avP ftp.ncbi.nlm.nih.gov::refseq/release/plasmid/ RefSeq/
 
 - `sed`流编辑器
 选项：`-e`允许在一个 sed 中执行多个编辑操作，如`sed -e 'command1' -e 'command2' filename`  
-用法：`sed '1d'`删除第一行
+用法：`sed '1d'`删除第一行delete
 
 ### xargs
 
@@ -99,7 +106,7 @@ rsync -avP ftp.ncbi.nlm.nih.gov::refseq/release/plasmid/ RefSeq/
 
 ### parallel
 
-- `parallel`并行处理
+- `parallel`并行处理，通常后接双引号`"..."`包围命令
 选项：`--colsep`每列按顺序依次传递给后续命令  
   `{}`占位符，文件的完整路径
   `{/}`文件的目录路径，不包含文件名
@@ -118,7 +125,9 @@ rsync -avP ftp.ncbi.nlm.nih.gov::refseq/release/plasmid/ RefSeq/
 
 - `grep`文本搜索匹配
 选项：`-v`--invert-match 反向匹配，保留没匹配上的
-  `-x`--line-match 全行匹配，整行完全匹配才满需要求
+  `-x`--line-match 全行匹配，整行完全匹配才满需要求    
+  `-B 数字`--before-context 显示匹配行之前的指定行数    
+  `-E`extended regular expression支持扩展政策表达式，特殊字符无需用`\`转义，可直接使用   
 
 ### tr(translate)
 
@@ -217,9 +226,21 @@ Polyketide+NRP:Lipopeptide
 pup "div#r1c${i} div.comparison-container table.cc-heat-table tbody tr td text{}"
 ```
 解释：    
-一层一层提取。先page，用`#`选择div的id，即region页面的id，其中`${i}`可变，从1开始。用`.`选择div的class，即MIBiG栏部分。    
+一层一层提取。先page，用`#`选择div的**id**，即region页面的id，其中`${i}`可变，从1开始。用`.`选择div的**class**，即MIBiG栏部分。    
 用`table`提取MIBiG提取表格部分文本内容，后续跟上面一样。    
 
 
 ### seq
 - `seq`生成一系列数字序列
+
+### basename
+- `basename`从路径中提取文件名
+选项：`-s`suffix，从文件名中去除指定的后缀，即取出不需要的扩展名
+
+### tar
+- `tar`归档工具，打包、解压文件
+选项：`-x`extract解压    
+  `-v`verbose详细信息    
+  `-f`file归档的文件名    
+  `-C <目录>`指定解压目标目录    
+  `----strip-components 数字`目标归档文件中存在嵌套目录时，去掉目录层级。例如，数字为1，去掉最顶层目录，文件和子目录直接解压到目标目录下     

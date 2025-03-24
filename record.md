@@ -119,4 +119,5 @@ ps：
 > 科family：-aceae
 
 链霉菌（Streptomycetaceae）属放线菌门/纲。放线菌（Actinobacteria）属于革兰氏阳性菌。   
-[Kitasatosporales](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi)目包含三个科：Allostreptomycetaceae、Carbonactinosporaceae、[Streptomycetaceae](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Tree&id=2062&lvl=3&lin=f&keep=1&srchmode=1&unlock)。[参考](https://lpsn.dsmz.de/order/kitasatosporales)
+[Kitasatosporales](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Undef&id=85011&lvl=3&lin=f&keep=1&srchmode=1&unlock)目包含三个科：Allostreptomycetaceae、Carbonactinosporaceae、[Streptomycetaceae](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Tree&id=2062&lvl=3&lin=f&keep=1&srchmode=1&unlock)。[参考](https://lpsn.dsmz.de/order/kitasatosporales)
+

@@ -95,12 +95,14 @@ similarity score计算：基于MIBiG数据库中已知BGC，通过diamond工具�
 
 
 ### 结果js文件
-存储四个对象。
+存储四个对象。`recordData`、`all_regions`、`details_data`、`resultsdata`
 
 
-- `details_date`中：
+- `details_data`中：
 > `r1c?`:每个region
 > 
-> `orfs`：
+> `orfs`：开放阅读框，包含每个基因的信息，包括id、sequence、domains、modules
 >
-> `domains`：包含多个NRPS域，一个域一个对象，包含位置、序列等详细信息
+> `domains`：包含一个或多个domain信息，再细分为一个域一个对象，包含位置、序列等详细信息
+>
+> 一个domain对象中，包括了type、start、end、predictions、数据库link、sequence、dna_sequence、abbreviation、html_class等详细信息
