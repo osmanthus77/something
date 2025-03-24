@@ -105,4 +105,7 @@ similarity score计算：基于MIBiG数据库中已知BGC，通过diamond工具�
 >
 > `domains`：包含一个或多个domain信息，再细分为一个域一个对象，包含位置、序列等详细信息
 >
-> 一个domain对象中，包括了type、start、end、predictions、数据库link、sequence、dna_sequence、abbreviation、html_class等详细信息
+> 一个domain对象中，包括了type、start、end、predictions、数据库link、sequence、dna_sequence、abbreviation、html_class等详细信息\
+
+`details_data`部分内容如图：
+![regions_js_picture](/pic/regions_js.png "regions_js")
