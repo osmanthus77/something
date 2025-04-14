@@ -200,7 +200,7 @@ MPI：message passing interface 消息传递接口，一种并行计算框架
 pup 'table.region-table tbody tr td text{}'
 ```
 结果：
-```shell
+```
 
 
 Region 1
@@ -244,3 +244,9 @@ pup "div#r1c${i} div.comparison-container table.cc-heat-table tbody tr td text{}
   `-f`file归档的文件名    
   `-C <目录>`指定解压目标目录    
   `----strip-components 数字`目标归档文件中存在嵌套目录时，去掉目录层级。例如，数字为1，去掉最顶层目录，文件和子目录直接解压到目标目录下     
+
+### datamash
+datamash 是一个命令行工具，专门用于在 Unix/Linux 环境下处理结构化文本数据（尤其是按列组织的表格数据）。它可以快速完成像求和、平均、排序、分组、转置、标准差、计数等操作
+
+- `datamash check`
+用于检查和验证输入数据的格式、内容以及可能的错误。主要包括，数据格式是否正确，或者数据中可能存在空值、错位列等问题

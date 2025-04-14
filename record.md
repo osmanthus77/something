@@ -97,10 +97,11 @@ iqtree -s sample.phy -m TIM2+I+G -bb 1000
 `-b`常规 bs 法
 
 其他参数：
-- `-alrt`启用SH-aLRT检验，≥1000，检验树的拓扑结构可信度，推荐大数据运算时使用    
-- `-o`指定外群outgroup     
-- `redo`覆盖之前运行成功后已经生成的文件    
-- `pre`设置输出文件前缀和路径，/root/Phylogenetic_trees/iqtree1，在/root/Phylogenetic_trees/路径下生成结果文件，文件名称均为iqtree1.XXX
+
+- `-alrt`启用 SH-aLRT 检验，≥1000，检验树的拓扑结构可信度，推荐大数据运算时使用
+- `-o`指定外群 outgroup
+- `redo`覆盖之前运行成功后已经生成的文件
+- `pre`设置输出文件前缀和路径，/root/Phylogenetic_trees/iqtree1，在/root/Phylogenetic_trees/路径下生成结果文件，文件名称均为 iqtree1.XXX
 
 对于结果，iqtree 建议`SH-aLRT >= 80%`和 `UFboot >= 95%`比较可信。
 
@@ -148,3 +149,9 @@ ps：
 
 链霉菌（Streptomycetaceae）属放线菌门/纲。放线菌（Actinobacteria）属于革兰氏阳性菌。  
 [Kitasatosporales](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Undef&id=85011&lvl=3&lin=f&keep=1&srchmode=1&unlock)目包含三个科：Allostreptomycetaceae、Carbonactinosporaceae、[Streptomycetaceae](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Tree&id=2062&lvl=3&lin=f&keep=1&srchmode=1&unlock)。[参考](https://lpsn.dsmz.de/order/kitasatosporales)
+
+## SQL 结构化查询语言
+
+SQL(Structured Query Language, 结构化查询语言)：用于管理关系数据库管理系统(Relational Database Management System, RDBMS)，通过一系列的语句和命令来执行数据定义、数据查询、数据操作和数据控制等功能,包括数据插入、查询、更新和删除，数据库模式创建和修改，以及数据访问控制。   
+RDBMS 中的数据存储在被称为表的数据库对象中。表是相关的数据项的集合，它由列和行组成。
+
