@@ -1,5 +1,6 @@
 # 下载 *Actionmycetes* 基因组数据
 分歧杆菌目( *Mycobacteriales* )通常是病原菌，下载基因组数据时排除掉
+[Glycopeptide Antibiotics](https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1521-3773(19990802)38:15%3C2096::AID-ANIE2096%3E3.0.CO;2-F)列举了1999年之前发现的糖肽抗生素及其来源细菌，分别在Streptosporangiales、Pseudonocardiales、Kitasatosporales、Micromonosporales、Actinomycetales五个目中
 
 ## 1 统计分类信息
 
@@ -9,24 +10,12 @@ nwr member Actinomycetes -r order |
     rgr md stdin --num
 
 nwr member \
-    Acidothermales Actinomycetales Actinopolysporales Bifidobacteriales \
-    'Candidatus Actinomarinales' 'Candidatus Nanopelagicales' \
-    Catenulisporales Cryptosporangiales Frankiales Geodermatophilales \
-    Glycomycetales Jatrophihabitantales Jiangellales Kineosporiales \
-    Kitasatosporales Micrococcales Micromonosporales Motilibacterales \
-    Nakamurellales Propionibacteriales Pseudonocardiales \
-    Sporichthyales Streptosporangiales |
+    Streptosporangiales Pseudonocardiales Kitasatosporales Micromonosporales Actinomycetales |
     tsv-summarize -H -g 3 --count |
     rgr md stdin --fmt
 
 nwr member \
-    Acidothermales Actinomycetales Actinopolysporales Bifidobacteriales \
-    'Candidatus Actinomarinales' 'Candidatus Nanopelagicales' \
-    Catenulisporales Cryptosporangiales Frankiales Geodermatophilales \
-    Glycomycetales Jatrophihabitantales Jiangellales Kineosporiales \
-    Kitasatosporales Micrococcales Micromonosporales Motilibacterales \
-    Nakamurellales Propionibacteriales Pseudonocardiales \
-    Sporichthyales Streptosporangiales \
+    Streptosporangiales Pseudonocardiales Kitasatosporales Micromonosporales Actinomycetales \
     -r "species group" -r "species subgroup" |
     tsv-select -f 1-3 |
     keep-header -- tsv-sort -k3,3 -k2,2 |
@@ -79,7 +68,6 @@ nwr member \
 
 | #tax_id | sci_name                              | rank             |
 | ------: | ------------------------------------- | ---------------- |
-| 2893675 | Actinopolyspora alba group            | species group    |
 | 2893673 | Amycolatopsis japonica group          | species group    |
 | 2893674 | Amycolatopsis methanolica group       | species group    |
 | 2893671 | Prauserella coralliicola group        | species group    |
@@ -120,20 +108,14 @@ mkdir -p ~/project/nwr/Actionmycetes/summary
 cd ~/project/nwr/Actionmycetes/summary
 
 nwr member \
-    Acidothermales Actinomycetales Actinopolysporales Bifidobacteriales \
-    'Candidatus Actinomarinales' 'Candidatus Nanopelagicales' \
-    Catenulisporales Cryptosporangiales Frankiales Geodermatophilales \
-    Glycomycetales Jatrophihabitantales Jiangellales Kineosporiales \
-    Kitasatosporales Micrococcales Micromonosporales Motilibacterales \
-    Nakamurellales Propionibacteriales Pseudonocardiales \
-    Sporichthyales Streptosporangiales \
+    Streptosporangiales Pseudonocardiales Kitasatosporales Micromonosporales Actinomycetales \
     -r genus |
     sed '1d' |
     sort -n -k1,1 \
     > genus.list.tsv
 
 wc -l genus.list.tsv 
-#442 genus.list.tsv
+# 158 genus.list.tsv
 
 #refseq信息
 cat genus.list.tsv | cut -f 1 |
@@ -174,8 +156,8 @@ done |
     > GB1.tsv
 
 wc -l RS*.tsv GB*.tsv
-# 13542 RS1.tsv
-# 14348 GB1.tsv
+# 8075 RS1.tsv
+# 8975 GB1.tsv
 
 #统计总数
 for C in RS GB; do
@@ -187,8 +169,8 @@ for C in RS GB; do
         fi
     done
 done
-#RS1	26874
-#GB1	38096
+#RS1	13792
+#GB1	16373
 ```
 
 ## 3 下载数据
@@ -223,7 +205,7 @@ echo "
     > reference.tsv
 
 wc -l reference.tsv 
-# 3626 reference.tsv
+# 1732 reference.tsv
 
 cat reference.tsv |
     tsv-select -H -f organism_name,species,genus,ftp_path,biosample,assembly_level,assembly_accession \
@@ -257,6 +239,8 @@ echo "
     " |
     sqlite3 -separator $'\t' ~/.nwr/ar_refseq.sqlite \
     >> raw.tsv
+wc -l raw.tsv 
+#7515 raw.tsv
 
 # 添加未知种
 echo "
@@ -271,6 +255,8 @@ echo "
     " |
     sqlite3 -separator $'\t' ~/.nwr/ar_refseq.sqlite \
     >> raw.tsv
+wc -l raw.tsv
+#13793 raw.tsv
 
 # 单独保存 refseq 中 assembly_accession
 cat raw.tsv |
@@ -289,7 +275,7 @@ SPECIES=$(
         sed 's/,$//'
 )
 
-# 排除未知种和杂交种
+# 排除未知种和杂交种，并排除refseq中出现的
 echo "
     SELECT
         species || ' ' || infraspecific_name || ' ' || assembly_accession AS name,
@@ -324,7 +310,7 @@ echo "
 cat raw.tsv |
     rgr dedup stdin |
     datamash check
-#41722 lines, 7 fields
+#16374 lines, 7 fields
 ```
 
 - 创建基于目标基因组的表格
@@ -354,7 +340,7 @@ cat raw.tsv |
 
 # 统计检查
 datamash check < Actionmycetes.assembly.tsv
-# 38074 lines, 5 fields
+# 16356 lines, 5 fields
 
 # 去重
 cat Actionmycetes.assembly.tsv |
@@ -391,86 +377,32 @@ mv Count/genus.count.tsv Count/genus.before.tsv
 # 转化为markdown格式
 cat Count/genus.before.tsv |
     keep-header -- tsv-sort -k1,1 |
-    tsv-filter -H --ge 3:50 |
+    tsv-filter -H --ge 3:100 |
     rgr md stdin --num
 ```
 `Count/taxa.tsv`文件内容：
 | item    |  count |
 | ------- | -----: |
-| strain  | 37,934 |
-| species |  4,057 |
-| genus   |    414 |
-| family  |     52 |
-| order   |     23 |
+| strain  | 16,349 |
+| species |  2,032 |
+| genus   |    145 |
+| family  |     10 |
+| order   |      5 |
 | class   |      1 |
 
 `Count/genus.before.tsv`部分内容：
-| genus              | #species | #strains |
-| ------------------ | -------: | -------: |
-| Actinomadura       |       71 |      176 |
-| Actinomyces        |       48 |      496 |
-| Actinoplanes       |       36 |      153 |
-| Actinotignum       |        5 |       76 |
-| Aeriscardovia      |        2 |       53 |
-| Aeromicrobium      |       26 |      192 |
-| Agromyces          |       45 |      147 |
-| Amycolatopsis      |       89 |      313 |
-| Aquiluna           |        2 |      115 |
-| Arachnia           |        4 |       58 |
-| Arcanobacterium    |       13 |       76 |
-| Arthrobacter       |       82 |      703 |
-| Bifidobacterium    |      108 |     7026 |
-| Blastococcus       |       20 |       74 |
-| Brachybacterium    |       34 |      141 |
-| Brevibacterium     |       45 |      276 |
-| Cellulomonas       |       48 |      211 |
-| Cellulosimicrobium |        9 |       91 |
-| Clavibacter        |       11 |      360 |
-| Cryobacterium      |       35 |      160 |
-| Curtobacterium     |       15 |      347 |
-| Cutibacterium      |        8 |     2264 |
-| Demequina          |       27 |       64 |
-| Frankia            |       13 |       86 |
-| Frigoribacterium   |        3 |       61 |
-| Gardnerella        |        7 |      388 |
-| Glutamicibacter    |       14 |      105 |
-| Glycomyces         |       25 |       50 |
-| Isoptericola       |       14 |       68 |
-| Janibacter         |       14 |       70 |
-| Kitasatospora      |       36 |      408 |
-| Kocuria            |       23 |      285 |
-| Kribbella          |       38 |      124 |
-| Leifsonia          |       15 |      112 |
-| Lentzea            |       26 |       64 |
-| Leucobacter        |       35 |      148 |
-| Marmoricola        |        2 |       77 |
-| Microbacterium     |      161 |     1235 |
-| Microbispora       |       15 |       79 |
-| Micrococcus        |       12 |      531 |
-| Micromonospora     |      124 |      888 |
-| Mobiluncus         |        6 |       68 |
-| Modestobacter      |       10 |       50 |
-| Nakamurella        |       13 |       50 |
-| Nesterenkonia      |       29 |       61 |
-| Nocardioides       |      154 |      620 |
-| Nocardiopsis       |       47 |      173 |
-| Nonomuraea         |       67 |      288 |
-| Paenarthrobacter   |        8 |      144 |
-| Phycicoccus        |        9 |       56 |
-| Pontimonas         |        2 |       98 |
-| Propionibacterium  |        6 |      225 |
-| Pseudarthrobacter  |       19 |      164 |
-| Pseudoclavibacter  |        9 |       51 |
-| Pseudonocardia     |       54 |      215 |
-| Rathayibacter      |       12 |      182 |
-| Rhodoluna          |        4 |      124 |
-| Rothia             |       15 |      391 |
-| Saccharopolyspora  |       34 |       88 |
-| Saccharothrix      |       22 |       55 |
-| Salinibacterium    |        7 |       56 |
-| Schaalia           |       13 |      112 |
-| Streptomyces       |      827 |    11828 |
-| Streptosporangium  |       22 |      106 |
-| Trebonia           |        2 |       77 |
-| Trueperella        |        7 |      171 |
-| Varibaculum        |        6 |       59 |
+| genus             | #species | #strains |
+| ----------------- | -------: | -------: |
+| Actinomadura      |       72 |      171 |
+| Actinomyces       |       48 |      487 |
+| Actinoplanes      |       36 |      152 |
+| Amycolatopsis     |       88 |      293 |
+| Kitasatospora     |       35 |      395 |
+| Micromonospora    |      123 |      846 |
+| Nocardiopsis      |       47 |      156 |
+| Nonomuraea        |       66 |      287 |
+| Pseudonocardia    |       53 |      209 |
+| Schaalia          |       13 |      107 |
+| Streptomyces      |      816 |    11289 |
+| Streptosporangium |       28 |      110 |
+| Trueperella       |        7 |      142 |
