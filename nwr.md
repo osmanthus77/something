@@ -75,7 +75,7 @@ nwr member "Homo"
 
 ### 2.2 具体命令用法
 
-#### nwr data
+#### 2.2.1 nwr data
 
 - 用法：
 
@@ -111,7 +111,7 @@ nwr ops <command>
   | reroot | 将根节点重新放置在指定节点与其父节点的中间 |
   | help | 输出帮助信息 |
 
-#### nwr viz
+#### 2.2.2 nwr viz
 
 - 用法：
 
@@ -127,7 +127,7 @@ nwr viz <command>
   | tex | 使用 LaTeX 可视化 Newick 进化树 |
   | help | 输出帮助信息 |
 
-#### nwr member
+#### 2.2.3 nwr member
 
 列出某一祖先的特定分类等级下的成员
 
@@ -172,7 +172,7 @@ nwr member Bacillales -r family
 90964	Staphylococcaceae	family	Bacteria
 ```
 
-#### nwr template
+#### 2.2.4 nwr template
 
 为系统发育基因组研究创建目录、数据和脚本
 
@@ -199,3 +199,66 @@ nwr template [OPTIONS] <infiles>...
 > `--rank`：分类水平等级，genus、family、order、class
 >
 > `--ass`：Prepare ASSEMBLY/ materials，根据输入文件生成对应的下载链接文件（1个）和脚本（6个）
+
+
+#### 2.2.5 nwr plot
+
+`nwr plot`绘图，包括韦恩图`venn`、热图`hh`、NRPS结构图`nrps`三个子命令
+
+- nwr plot hh 画热图
+
+`nwr plot hh`输入文件格式要求为两列，在第二列中分组
+```tsv
+Value	Group
+0.127355	A1
+0.136287	A1
+0.151956	A1
+0.123647	A2
+0.126801	A2
+0.153377	A2
+```
+
+参数：
+> `-g`输入tsv的列数，一般为2
+>
+> `--bins`将横坐标区间拆分为多少小区间，默认40
+>
+> `--xl`/`--yl`横纵坐标的名称
+>
+> `--xmm`横坐标的最小值和最大值
+>
+> `-o`输出文件的名称，默认是stdout
+
+示例：
+```shell
+nwr plot hh Ks_Cdomain/Ks_Cdomain.tsv -g 2 --bins 40 --xl "" --yl "" --xmm 0,2  -o Ks_plot/Ks_Cdomain.tex |
+    tectonic -
+```
+
+- nwr plot nrps 画NRPS结构图
+
+输入文件为tsv，格式如下：第一列是NRPS模块和domain，第二列为各自的名称，第三列为颜色
+```tsv
+Module	M1	grey
+C	Cy	
+A	Glu	
+T		
+Module	M2	brown
+C		
+A	Leu	
+T
+```
+
+参数：
+> `-o`输出文件名称，默认stdout
+>
+> `-c`color模块颜色，默认灰色
+
+示例：
+```shell
+nwr plot nrps nrps_test.tsv --legend --color blue -o nrps_test.tex |
+    tectonic -
+magick -density 600 nrps_test.pdf nrps_test.png
+```
+结果如图：
+![nrps_domain](/pic/nrps_test.png 'nrps_domain')
